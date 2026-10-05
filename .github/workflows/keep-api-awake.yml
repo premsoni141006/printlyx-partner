@@ -1,10 +1,12 @@
 name: keep-api-awake
 # Render Free sleeps after ~15 idle minutes and the next request waits ~1 min
-# while it boots. A light ping every 10 minutes keeps it warm (one service
-# running all month stays inside the free 750 hours).
+# while it boots. Two offset schedules: GitHub often runs scheduled jobs late,
+# so one every 10 min left gaps of 20+ min. (One service all month stays
+# inside the free 750 hours.)
 on:
   schedule:
     - cron: '*/10 * * * *'
+    - cron: '5-59/10 * * * *'
   workflow_dispatch:
 jobs:
   ping:
